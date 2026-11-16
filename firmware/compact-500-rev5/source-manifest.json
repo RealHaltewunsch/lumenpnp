@@ -1,0 +1,13 @@
+{
+  "upstream_repository": "https://github.com/sphawes/Marlin.git",
+  "base_commit": "7776c7322837fc6065605413f7932ee9d56458a9",
+  "source_commit": "81450510d5785d86a358e61707185133a746a0ab",
+  "target": "Opulo_Lumen_REV5",
+  "application_address": "0x08000000",
+  "firmware_includes_16_byte_dfu_suffix": true,
+  "payload_bytes": 127488,
+  "payload_sha256": "2eab1588ebac3e2b0400b3b0e3ddf8176b5e9f7fc1402b8b3a8b8ff51cc11942",
+  "firmware_sha256": "e215044988e1cabec9969e8d60ad1536c81030037bbb402e9a4eb69c87f8d77a",
+  "hardware_verified": "2026-11-16",
+  "source_commit_note": "Documentation was updated after the binary was built; firmware code matches the flashed build."
+}

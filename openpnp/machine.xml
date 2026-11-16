@@ -7,7 +7,7 @@
             <backlash-offset value="0.1" units="Millimeters"/>
             <sneak-up-offset value="0.2262741699796953" units="Millimeters"/>
             <soft-limit-low value="0.0" units="Millimeters"/>
-            <soft-limit-high value="433.0" units="Millimeters"/>
+            <soft-limit-high value="333.0" units="Millimeters"/>
             <safe-zone-low value="0.0" units="Millimeters"/>
             <safe-zone-high value="0.0" units="Millimeters"/>
             <feedrate-per-second value="200.0" units="Millimeters"/>
@@ -109,7 +109,7 @@
             <backlash-offset value="0.1" units="Millimeters"/>
             <sneak-up-offset value="0.16000000000000006" units="Millimeters"/>
             <soft-limit-low value="0.0" units="Millimeters"/>
-            <soft-limit-high value="487.0" units="Millimeters"/>
+            <soft-limit-high value="387.0" units="Millimeters"/>
             <safe-zone-low value="0.0" units="Millimeters"/>
             <safe-zone-high value="0.0" units="Millimeters"/>
             <feedrate-per-second value="200.0" units="Millimeters"/>
@@ -369,7 +369,7 @@
             <default-z value="61.0" units="Millimeters"/>
             <vision-provider class="org.openpnp.machine.reference.vision.OpenCvVisionProvider"/>
             <roaming-radius value="0.0" units="Millimeters"/>
-            <head-offsets units="Millimeters" x="218.151" y="151.439" z="5.7" rotation="0.0"/>
+            <head-offsets units="Millimeters" x="168.151" y="151.439" z="5.7" rotation="0.0"/>
             <safe-z value="0.0" units="Millimeters"/>
             <calibration enabled="false">
                <camera-matrix length="9">2111.355587855576, 0.0, 605.0663860340355, 0.0, 2128.668185693804, 413.20408953641106, 0.0, 0.0, 1.0</camera-matrix>
@@ -444,16 +444,6 @@
             <command type="CONNECT_COMMAND">
                <text><![CDATA[G21 ; Set millimeters mode ]]></text>
                <text><![CDATA[G90 ; Set absolute positioning mode]]></text>
-               <text><![CDATA[M260 A112 B1 S1 ; Selecting VAC1 through the I2C multiplexer]]></text>
-               <text><![CDATA[M260 A109 ; Starts Command to VAC sensor at address 109]]></text>
-               <text><![CDATA[M260 B48 ; Address Byte 48 selects CMD register]]></text>
-               <text><![CDATA[M260 B27 ; Sends byte to select 62.5 sleep time, SCO, sleep mode conversion (0001 1 011)]]></text>
-               <text><![CDATA[M260 S1 ; Sends data]]></text>
-               <text><![CDATA[M260 A112 B2 S1 ; Selecting VAC2 through the I2C multiplexer]]></text>
-               <text><![CDATA[M260 A109 ; Starts Command to VAC sensor at address 109]]></text>
-               <text><![CDATA[M260 B48 ; Address Byte 48 selects CMD register]]></text>
-               <text><![CDATA[M260 B27 ; Sends byte to select 62.5 sleep time, SCO, sleep mode conversion (0001 1 011)]]></text>
-               <text><![CDATA[M260 S1 ; Sends data]]></text>
             </command>
             <command head-mountable-id="ACT170524c73c5ed540" type="ACTUATOR_READ_COMMAND">
                <text><![CDATA[M271 S0x{Value}]]></text>
@@ -552,12 +542,10 @@
                <text><![CDATA[^.*X:(?<X>-?\d+\.\d+)\s*Y:(?<Y>-?\d+\.\d+)\s*Z:(?<Z>-?\d+\.\d+)\s*A:(?<A>-?\d+\.\d+)\s*B:(?<B>-?\d+\.\d+).*]]></text>
             </command>
             <command head-mountable-id="ACT171086c0660cfc3b" type="ACTUATOR_READ_COMMAND">
-               <text><![CDATA[M260 A112 B1 S1 ; Select vac1 through multiplexer]]></text>
-               <text><![CDATA[M260 A109 B6 S1 ; Selects MSB register]]></text>
-               <text><![CDATA[M261 A109 B1 S2 ; Request one byte back via decimal]]></text>
+               <text><![CDATA[M3427 T1 ; Read selected VAC1 sensor]]></text>
             </command>
             <command head-mountable-id="ACT171086c0660cfc3b" type="ACTUATOR_READ_REGEX">
-               <text><![CDATA[^.*data:(?<Value>.*)]]></text>
+               <text><![CDATA[^.*vacuum_level:(?<Value>\d+).*]]></text>
             </command>
             <command head-mountable-id="ACT171086c0660cfc3b" type="ACTUATE_BOOLEAN_COMMAND">
                <text><![CDATA[{True:M106 P1 S180}{False:M107 P1};]]></text>
@@ -568,12 +556,10 @@
                <text><![CDATA[{True:M106 P3 S180}{False:M107 P3};]]></text>
             </command>
             <command head-mountable-id="ACT171086f27295ab60" type="ACTUATOR_READ_COMMAND">
-               <text><![CDATA[M260 A112 B2 S1 ; Select vac1 through multiplexer]]></text>
-               <text><![CDATA[M260 A109 B6 S1 ; Selects MSB register]]></text>
-               <text><![CDATA[M261 A109 B1 S2 ; Request one byte back via decimal]]></text>
+               <text><![CDATA[M3427 T2 ; Read selected VAC2 sensor]]></text>
             </command>
             <command head-mountable-id="ACT171086f27295ab60" type="ACTUATOR_READ_REGEX">
-               <text><![CDATA[^.*data:(?<Value>.*)]]></text>
+               <text><![CDATA[^.*vacuum_level:(?<Value>\d+).*]]></text>
             </command>
             <command head-mountable-id="ACT17aedeead9964f57" type="ACTUATOR_READ_COMMAND">
                <text><![CDATA[M485 {Value}]]></text>
