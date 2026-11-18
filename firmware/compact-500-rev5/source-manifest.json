@@ -1,15 +1,15 @@
 {
   "upstream_repository": "https://github.com/sphawes/Marlin.git",
   "base_commit": "7776c7322837fc6065605413f7932ee9d56458a9",
-  "source_commit": "864135f9e3aa86e0e08610fb9e0c2ffa59e99b62",
+  "source_commit": "822071b111ae7636c3aecc76070dc9107df5a3a4",
   "target": "Opulo_Lumen_REV5",
   "application_address": "0x08000000",
   "firmware_includes_16_byte_dfu_suffix": true,
   "payload_bytes": 127488,
-  "payload_sha256": "f70d98fc72b19552dcb64d042f602b9187d6e94a95600b4b98e9df1cb47435d5",
-  "firmware_sha256": "708efd1055d49ad771a470af5426ca0b8ddecd34705601320eeff9ad472c7bcf",
-  "hardware_verified": "2026-11-18",
-  "source_commit_note": "DFU readback matched. Full G28 and X/Y travel validated on hardware.",
+  "payload_sha256": "64f743cc485dc168f45f83fae7fb20e4bd69f8148a98daedf7063ac0df492846",
+  "firmware_sha256": "81ef32464dd8c63ba706cac58a16789e0016d6c5f035ebac7fa7feaaa3f97503",
+  "source_commit_note": "Z travel to 56 mm confirmed during bring-up. This build has not been flashed or read back.",
   "x_steps_per_mm": 400,
-  "y_steps_per_mm": 320
+  "y_steps_per_mm": 320,
+  "z_max_mm": 56
 }

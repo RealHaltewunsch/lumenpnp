@@ -55,3 +55,6 @@ Both Y motors move the gantry toward Y-MIN on negative moves. Full `G28`
 completed at X=0, Y=0, Z=31.5 mm. At 25 mm/s, the measured 200 mm X move
 and 100 mm Y move confirmed 400 steps/mm for X and 320 steps/mm for Y.
 The operator confirmed Y=387 mm and X=333 mm, with X tested at Y=193.5 mm.
+
+Z travel was confirmed from 0 to 56 mm. Marlin and the OpenPnP controller axis
+now limit the commanded travel to this range. Z moves to 31.5 mm after homing.

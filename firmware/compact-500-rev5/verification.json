@@ -1,5 +1,6 @@
 {
-  "byte_identical": true,
+  "byte_identical": null,
+  "flash_readback": "pending",
   "payload_bytes": 127488,
-  "sha256": "f70d98fc72b19552dcb64d042f602b9187d6e94a95600b4b98e9df1cb47435d5"
+  "sha256": "64f743cc485dc168f45f83fae7fb20e4bd69f8148a98daedf7063ac0df492846"
 }
