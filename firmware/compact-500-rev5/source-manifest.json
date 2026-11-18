@@ -1,14 +1,15 @@
 {
   "upstream_repository": "https://github.com/sphawes/Marlin.git",
   "base_commit": "7776c7322837fc6065605413f7932ee9d56458a9",
-  "source_commit": "24b354c8b43694f7b1d98da96695eff7bd03cbfe",
+  "source_commit": "864135f9e3aa86e0e08610fb9e0c2ffa59e99b62",
   "target": "Opulo_Lumen_REV5",
   "application_address": "0x08000000",
   "firmware_includes_16_byte_dfu_suffix": true,
   "payload_bytes": 127488,
-  "payload_sha256": "ee507abae6b4e56ad8dd873b0dc643a272b5815c6e9eed883e87d084496b53d6",
-  "firmware_sha256": "81821dc82753b1db85b3f496c4732671bae79474ae9d47f5e60c985eaf6d3e72",
+  "payload_sha256": "f70d98fc72b19552dcb64d042f602b9187d6e94a95600b4b98e9df1cb47435d5",
+  "firmware_sha256": "708efd1055d49ad771a470af5426ca0b8ddecd34705601320eeff9ad472c7bcf",
   "hardware_verified": "2026-11-18",
-  "source_commit_note": "Flash readback verified; physical travel at 400 steps/mm remains to be measured.",
-  "x_steps_per_mm": 400
+  "source_commit_note": "DFU readback matched. Full G28 and X/Y travel validated on hardware.",
+  "x_steps_per_mm": 400,
+  "y_steps_per_mm": 320
 }

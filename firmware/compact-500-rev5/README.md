@@ -7,8 +7,10 @@ and the byte-for-byte flash-readback result.
 ## Current behavior
 
 - X direction: `INVERT_X_DIR=false`; positive X moves away from X-MIN.
-- X scale: 400 steps/mm, derived from 32,000 step pulses for approximately 80 mm of measured travel. A repeat measurement with the new scale is pending.
-- Nominal XY travel: 333 x 387 mm. Full travel clearance remains unverified.
+- X scale: 400 steps/mm. A 200 mm move from X-MIN at 25 mm/s matched the measured travel.
+- Y direction: `INVERT_Y_DIR=false` and `INVERT_Y2_VS_Y_DIR` disabled. Both motors move the gantry toward Y-MIN on negative moves. The switch stopped the approach at 25 mm/s.
+- Y scale: 320 steps/mm. A 100 mm move from Y-MIN at 25 mm/s matched the measured travel.
+- Travel checked on hardware: Y reached 387 mm, then moved to the midpoint at 193.5 mm. X reached its 333 mm limit with Y at that midpoint. The operator confirmed both limits.
 - PE3 LOW selects HBP1201D101GND6-4 sensors at I2C address `0x58`; HIGH
   selects the original GZP sensors at `0x6D`.
 - The HBP path processes all 24 pressure bits and automatically averages an
@@ -17,9 +19,7 @@ and the byte-for-byte flash-readback result.
   pressure, full raw counts, and `vacuum_level` (255 at ambient).
 - Ring lights use the original repository timing and startup RGB test,
   followed by lights off. No custom timing sender or white boot preset remains.
-- Z homing retains the original settings. With `Z_SAFE_HOMING` enabled,
-  `G28 Z` first requires X/Y homing. The slow isolated Z reference test passed;
-  the full `G28 Z` test failed with X/Y disconnected.
+- Full `G28` succeeded with both Y motors connected. The final position was X=0, Y=0, Z=31.5 mm, with X-MIN and Y-MIN triggered and Z-MIN released after the configured post-homing move.
 
 The X full-turn movement and return passed on hardware, and the direction was
 confirmed by the operator. Both ring lights passed the RGB test after replacing
@@ -39,7 +39,7 @@ git am /path/to/marlin-compact-500.patch
 pio run -e Opulo_Lumen_REV5
 ```
 
-The final local source commit is `24b354c8b43694f7b1d98da96695eff7bd03cbfe`. The
+The final local source commit is `864135f9e3aa86e0e08610fb9e0c2ffa59e99b62`. The
 Apple Silicon configuration included in the patch additionally expects the
 local native dfu-util tool described in `COMPACT-500-VACUUM-SENSORS.md`.
 
@@ -50,4 +50,4 @@ at `0x08000000` on the LumenPnP REV5 STM32F407VE. A complete readback matched
 all 127488 application bytes. See `verification.json` and
 `source-manifest.json` for hashes and provenance.
 
-Payload SHA-256: `ee507abae6b4e56ad8dd873b0dc643a272b5815c6e9eed883e87d084496b53d6`.
+Payload SHA-256: `f70d98fc72b19552dcb64d042f602b9187d6e94a95600b4b98e9df1cb47435d5`.

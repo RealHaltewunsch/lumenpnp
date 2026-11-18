@@ -19,8 +19,7 @@ Planned mechanical baseline:
 The companion `../Marlin` checkout targets the confirmed REV5 motherboard.
 X and Y home to MIN at the front-left origin (0, 0). Nominal travel is
 X=333 mm and Y=387 mm: the stock 433/487 mm travel minus the 100 mm reduction
-of each frame axis. These derived limits still require physical clearance
-verification on the assembled machine; no automatic motion test was run.
+of each frame axis. The travel limits were checked during the 2026-11-18 hardware bring-up.
 
 `openpnp/machine.xml` uses the same soft limits. The bottom camera remains
 centered on the staging plate, whose width changes from 600 to 500 mm while
@@ -49,3 +48,10 @@ The HBP sensors automatically zero at startup with open nozzles and pump/valve
 outputs off. OpenPnP reads both channels through `M3427` and `vacuum_level`.
 The slow isolated Z reference test passed, but full `G28 Z` still requires X/Y
 homing and failed when those axes were disconnected.
+
+## Motion checks (2026-11-18)
+
+Both Y motors move the gantry toward Y-MIN on negative moves. Full `G28`
+completed at X=0, Y=0, Z=31.5 mm. At 25 mm/s, the measured 200 mm X move
+and 100 mm Y move confirmed 400 steps/mm for X and 320 steps/mm for Y.
+The operator confirmed Y=387 mm and X=333 mm, with X tested at Y=193.5 mm.
