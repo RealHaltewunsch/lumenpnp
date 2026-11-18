@@ -59,3 +59,18 @@ The operator confirmed Y=387 mm and X=333 mm, with X tested at Y=193.5 mm.
 Z travel was confirmed from 0 to 56 mm. Marlin and the OpenPnP controller axis
 now limit the commanded travel to this range. The current firmware moves Z to 24.5 mm after homing. The OpenPnP
 controller home coordinate is set to the same value.
+
+### Nozzle rotation
+
+A is the left nozzle and B is the right nozzle. On each axis the operator
+confirmed that a move from 0° to +720° at 30°/s rotated counterclockwise
+when viewed from above. The controller reported +720° for both axes.
+Marlin uses `INVERT_I_DIR=false` and `INVERT_J_DIR=false`.
+
+The BD2038-52A motor datasheet specifies 1.8° per full step (200 full steps
+per revolution). The installed TMC2209 drivers use eight microsteps per full
+step, giving 1600 step pulses per revolution (4.444… per degree) for a direct
+drive. The configured 4.44 pulses per degree produced 3197 pulses for each
++720° test, three fewer than 3200 (0.675° nominal). The tests confirmed the
+direction by sight and the pulse count via the controller. The physical
+angle was not measured.

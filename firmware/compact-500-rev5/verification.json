@@ -1,7 +1,11 @@
 {
   "byte_identical": true,
   "flash_readback": "verified",
-  "payload_bytes": 127488,
-  "sha256": "7b95d83cf78b1cfdedd85cb08c03cd26dd197338f0bedeb6c61c84dc02d34959",
-  "configured_z_after_homing_mm": 24.5
+  "payload_bytes": 127496,
+  "sha256": "7694cb25a11fc8a98e7f5138ae0d61304f17f480e7f80f7d0b13c984529cfcdb",
+  "configured_z_after_homing_mm": 24.5,
+  "positive_rotation_viewed_from_above": {
+    "A": "counterclockwise",
+    "B": "counterclockwise"
+  }
 }

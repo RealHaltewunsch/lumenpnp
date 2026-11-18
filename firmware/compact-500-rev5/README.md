@@ -29,6 +29,8 @@ a defective level shifter. Vacuum pressure scaling was calculated from the
 manufacturer transfer formula; it has not been independently checked with a
 reference manometer. No complete OpenPnP placement cycle was tested.
 
+See the nozzle rotation checks in [COMPACT-500.md](../../COMPACT-500.md).
+
 ## Restore the source
 
 The patch applies to upstream Marlin commit `7776c7322837fc6065605413f7932ee9d56458a9`:
@@ -41,7 +43,7 @@ git am /path/to/marlin-compact-500.patch
 pio run -e Opulo_Lumen_REV5
 ```
 
-The final local source commit is `960a2e4f918cb279ff974aed37ad471faa1db002`. The
+The final local source commit is `76dfcbb2a367ecafaf97021bd18ea4c2d6945cd3`. The
 Apple Silicon configuration included in the patch additionally expects the
 local native dfu-util tool described in `COMPACT-500-VACUUM-SENSORS.md`.
 
@@ -51,4 +53,4 @@ local native dfu-util tool described in `COMPACT-500-VACUUM-SENSORS.md`.
 at `0x08000000` on the LumenPnP REV5 STM32F407VE. Flash readback matched the build byte for byte. The Z limit is configured at 56 mm. A homing cycle with the new post-homing position has not been run. See `verification.json` and
 `source-manifest.json` for hashes and provenance.
 
-Payload SHA-256: `7b95d83cf78b1cfdedd85cb08c03cd26dd197338f0bedeb6c61c84dc02d34959`.
+Payload SHA-256: `7694cb25a11fc8a98e7f5138ae0d61304f17f480e7f80f7d0b13c984529cfcdb`.
