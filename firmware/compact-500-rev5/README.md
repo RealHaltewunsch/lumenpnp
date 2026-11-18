@@ -1,12 +1,13 @@
 # Compact-500 REV5 firmware
 
 This package records the firmware flashed and checked during hardware bring-up
-on 2026-11-16. It contains the source patch, the DFU-suffixed application image,
+on 2026-11-18. It contains the source patch series, the DFU-suffixed application image,
 and the byte-for-byte flash-readback result.
 
 ## Current behavior
 
 - X direction: `INVERT_X_DIR=false`; positive X moves away from X-MIN.
+- X scale: 400 steps/mm, derived from 32,000 step pulses for approximately 80 mm of measured travel. A repeat measurement with the new scale is pending.
 - Nominal XY travel: 333 x 387 mm. Full travel clearance remains unverified.
 - PE3 LOW selects HBP1201D101GND6-4 sensors at I2C address `0x58`; HIGH
   selects the original GZP sensors at `0x6D`.
@@ -38,8 +39,7 @@ git am /path/to/marlin-compact-500.patch
 pio run -e Opulo_Lumen_REV5
 ```
 
-The local source commit is `81450510d5785d86a358e61707185133a746a0ab`. Its documentation was updated after
-the binary build; its firmware code matches the flashed application. The
+The final local source commit is `24b354c8b43694f7b1d98da96695eff7bd03cbfe`. The
 Apple Silicon configuration included in the patch additionally expects the
 local native dfu-util tool described in `COMPACT-500-VACUUM-SENSORS.md`.
 
@@ -50,4 +50,4 @@ at `0x08000000` on the LumenPnP REV5 STM32F407VE. A complete readback matched
 all 127488 application bytes. See `verification.json` and
 `source-manifest.json` for hashes and provenance.
 
-Payload SHA-256: `2eab1588ebac3e2b0400b3b0e3ddf8176b5e9f7fc1402b8b3a8b8ff51cc11942`.
+Payload SHA-256: `ee507abae6b4e56ad8dd873b0dc643a272b5815c6e9eed883e87d084496b53d6`.
