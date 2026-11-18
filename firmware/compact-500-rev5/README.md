@@ -48,7 +48,7 @@ local native dfu-util tool described in `COMPACT-500-VACUUM-SENSORS.md`.
 ## Binary and verification
 
 `firmware.bin` includes a 16-byte DFU suffix; program its application payload
-at `0x08000000` on the LumenPnP REV5 STM32F407VE. Flash readback for this build is pending. See `verification.json` and
+at `0x08000000` on the LumenPnP REV5 STM32F407VE. Flash readback matched the build byte for byte. After reboot, M211 confirmed the active limit of 56 mm. See `verification.json` and
 `source-manifest.json` for hashes and provenance.
 
 Payload SHA-256: `64f743cc485dc168f45f83fae7fb20e4bd69f8148a98daedf7063ac0df492846`.
