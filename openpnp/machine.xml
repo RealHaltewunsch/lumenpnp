@@ -206,7 +206,7 @@
             </backlash-speed-test-graph>
          </axis>
          <axis class="org.openpnp.machine.reference.axis.ReferenceControllerAxis" id="AXS16982438158d0458" name="z1" type="Z" driver-id="DRV16982438146c1dd4" letter="Z" backlash-compensation-method="DirectionalCompensation" backlash-speed-factor="0.1" limit-rotation="false" wrap-around-rotation="false" invert-linear-rotational="false" soft-limit-low-enabled="true" soft-limit-high-enabled="true" safe-zone-low-enabled="true" safe-zone-high-enabled="true" version="2.0">
-            <home-coordinate value="31.5" units="Millimeters"/>
+            <home-coordinate value="24.5" units="Millimeters"/>
             <acceptable-tolerance value="0.025" units="Millimeters"/>
             <backlash-offset value="0.0" units="Millimeters"/>
             <sneak-up-offset value="0.0" units="Millimeters"/>

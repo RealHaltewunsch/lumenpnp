@@ -1,16 +1,17 @@
 {
   "upstream_repository": "https://github.com/sphawes/Marlin.git",
   "base_commit": "7776c7322837fc6065605413f7932ee9d56458a9",
-  "source_commit": "822071b111ae7636c3aecc76070dc9107df5a3a4",
+  "source_commit": "960a2e4f918cb279ff974aed37ad471faa1db002",
   "target": "Opulo_Lumen_REV5",
   "application_address": "0x08000000",
   "firmware_includes_16_byte_dfu_suffix": true,
   "payload_bytes": 127488,
-  "payload_sha256": "64f743cc485dc168f45f83fae7fb20e4bd69f8148a98daedf7063ac0df492846",
-  "firmware_sha256": "81ef32464dd8c63ba706cac58a16789e0016d6c5f035ebac7fa7feaaa3f97503",
-  "source_commit_note": "Z travel to 56 mm confirmed during bring-up. This build matched DFU readback and reported the active 56 mm limit.",
+  "payload_sha256": "7b95d83cf78b1cfdedd85cb08c03cd26dd197338f0bedeb6c61c84dc02d34959",
+  "firmware_sha256": "f743bf3476c29f5c0c54c79f1b7ecd70f5a0691ecbe327938d6de9008ab93ea5",
+  "source_commit_note": "DFU readback matched. The new post-homing position is configured at 24.5 mm; a homing cycle with this build has not been run.",
   "x_steps_per_mm": 400,
   "y_steps_per_mm": 320,
   "z_max_mm": 56,
-  "hardware_verified": "2026-11-18"
+  "hardware_verified": "2026-11-18",
+  "z_after_homing_mm": 24.5
 }

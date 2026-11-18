@@ -1,7 +1,7 @@
 From 81450510d5785d86a358e61707185133a746a0ab Mon Sep 17 00:00:00 2001
 From: RealHaltewunsch <julius.merz@web.de>
 Date: Mon, 16 Nov 2026 23:05:46 +0100
-Subject: [PATCH 1/4] Configure Compact-500 vacuum sensors and correct X
+Subject: [PATCH 1/5] Configure Compact-500 vacuum sensors and correct X
  direction
 
 Add PE3-selected HBP1201D support using complete signed 24-bit pressure codes, automatic ambient zero at boot, and OpenPnP-compatible vacuum_level output.
@@ -455,7 +455,7 @@ index 0000000000..9828fba956
 From 24b354c8b43694f7b1d98da96695eff7bd03cbfe Mon Sep 17 00:00:00 2001
 From: RealHaltewunsch <julius.merz@web.de>
 Date: Wed, 18 Nov 2026 16:39:03 +0100
-Subject: [PATCH 2/4] Calibrate Compact-500 X axis to 400 steps/mm
+Subject: [PATCH 2/5] Calibrate Compact-500 X axis to 400 steps/mm
 
 The 100 mm command at 320 steps/mm emitted 32000 steps and moved approximately 80 mm. Use 400 steps/mm for X based on that measurement.
 ---
@@ -479,7 +479,7 @@ index c10338e731..b1dad14210 100644
 From 864135f9e3aa86e0e08610fb9e0c2ffa59e99b62 Mon Sep 17 00:00:00 2001
 From: RealHaltewunsch <julius.merz@web.de>
 Date: Wed, 18 Nov 2026 17:22:32 +0100
-Subject: [PATCH 3/4] Correct Compact-500 dual Y motor direction
+Subject: [PATCH 3/5] Correct Compact-500 dual Y motor direction
 
 Disable relative Y2 direction inversion for this wiring. Both motors now drive the gantry toward Y-MIN on negative moves.
 ---
@@ -503,7 +503,7 @@ index c1f584010f..f5dfabd19b 100644
 From 822071b111ae7636c3aecc76070dc9107df5a3a4 Mon Sep 17 00:00:00 2001
 From: RealHaltewunsch <julius.merz@web.de>
 Date: Wed, 18 Nov 2026 17:30:46 +0100
-Subject: [PATCH 4/4] Limit Compact-500 Z travel to 56 mm
+Subject: [PATCH 4/5] Limit Compact-500 Z travel to 56 mm
 
 The hardware test confirmed 56 mm after homing. Longer moves caused belt skip.
 ---
@@ -523,3 +523,26 @@ index b1dad14210..131ad05ae9 100644
  #define I_MIN_POS 0
  #define I_MAX_POS 720
  #define J_MIN_POS 0
+
+From 960a2e4f918cb279ff974aed37ad471faa1db002 Mon Sep 17 00:00:00 2001
+From: RealHaltewunsch <julius.merz@web.de>
+Date: Wed, 18 Nov 2026 17:36:48 +0100
+Subject: [PATCH 5/5] Set post-homing Z position to 24.5 mm
+
+---
+ Marlin/Configuration.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/Marlin/Configuration.h b/Marlin/Configuration.h
+index 131ad05ae9..31049c9b93 100644
+--- a/Marlin/Configuration.h
++++ b/Marlin/Configuration.h
+@@ -1742,7 +1742,7 @@
+ //#define Z_HOMING_HEIGHT  4      // (mm) Minimal Z height before homing (G28) for Z clearance above the bed, clamps, ...
+                                   // Be sure to have this much clearance over your Z_MAX_POS to prevent grinding.
+ 
+-#define Z_AFTER_HOMING  31.5      // (mm) Height to move to after homing Z
++#define Z_AFTER_HOMING  24.5      // (mm) Height to move to after homing Z
+ 
+ // Direction of endstops when homing; 1=MAX, -1=MIN
+ // :[-1,1]

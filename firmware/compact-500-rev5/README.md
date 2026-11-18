@@ -20,8 +20,8 @@ during hardware bring-up on 2026-11-18, its source patch series and DFU image.
   followed by lights off. No custom timing sender or white boot preset remains.
 - Z travel is limited to 0–56 mm in firmware and on the OpenPnP controller axis.
   The operator confirmed a 30 mm move and the 56 mm endpoint at 5 mm/s.
-  The post-homing position is 31.5 mm. The midpoint of the allowed travel is 28 mm.
-- Full `G28` succeeded with both Y motors connected. The final position was X=0, Y=0, Z=31.5 mm, with X-MIN and Y-MIN triggered and Z-MIN released after the configured post-homing move.
+  The configured post-homing position is 24.5 mm. The midpoint of the allowed travel is 28 mm.
+- Full `G28` succeeded with both Y motors connected. With the previous build, the final position was X=0, Y=0, Z=31.5 mm, with X-MIN and Y-MIN triggered and Z-MIN released after the configured post-homing move.
 
 The X full-turn movement and return passed on hardware, and the direction was
 confirmed by the operator. Both ring lights passed the RGB test after replacing
@@ -41,14 +41,14 @@ git am /path/to/marlin-compact-500.patch
 pio run -e Opulo_Lumen_REV5
 ```
 
-The final local source commit is `822071b111ae7636c3aecc76070dc9107df5a3a4`. The
+The final local source commit is `960a2e4f918cb279ff974aed37ad471faa1db002`. The
 Apple Silicon configuration included in the patch additionally expects the
 local native dfu-util tool described in `COMPACT-500-VACUUM-SENSORS.md`.
 
 ## Binary and verification
 
 `firmware.bin` includes a 16-byte DFU suffix; program its application payload
-at `0x08000000` on the LumenPnP REV5 STM32F407VE. Flash readback matched the build byte for byte. After reboot, M211 confirmed the active limit of 56 mm. See `verification.json` and
+at `0x08000000` on the LumenPnP REV5 STM32F407VE. Flash readback matched the build byte for byte. The Z limit is configured at 56 mm. A homing cycle with the new post-homing position has not been run. See `verification.json` and
 `source-manifest.json` for hashes and provenance.
 
-Payload SHA-256: `64f743cc485dc168f45f83fae7fb20e4bd69f8148a98daedf7063ac0df492846`.
+Payload SHA-256: `7b95d83cf78b1cfdedd85cb08c03cd26dd197338f0bedeb6c61c84dc02d34959`.
