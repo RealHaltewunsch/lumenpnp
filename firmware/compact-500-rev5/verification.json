@@ -1,11 +1,16 @@
 {
   "byte_identical": true,
   "flash_readback": "verified",
-  "payload_bytes": 127496,
-  "sha256": "7694cb25a11fc8a98e7f5138ae0d61304f17f480e7f80f7d0b13c984529cfcdb",
-  "configured_z_after_homing_mm": 24.5,
+  "payload_bytes": 131728,
+  "sha256": "d5e1b3c655e563ca7563c3ecb9bca87e27970d84dab8f50d1fdaf333d33461fd",
+  "configured_z_after_homing_mm": 30,
   "positive_rotation_viewed_from_above": {
     "A": "counterclockwise",
     "B": "counterclockwise"
-  }
+  },
+  "configured_z_max_mm": 63,
+  "configured_homing_xyz_mm_per_s": 75,
+  "enclosure_fan_50_percent_operator_confirmed": true,
+  "tmc_uart_drivers_responding": 6,
+  "thermal_switch_on_hardware_tested": false
 }

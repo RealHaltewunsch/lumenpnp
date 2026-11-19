@@ -1,17 +1,25 @@
 {
   "upstream_repository": "https://github.com/sphawes/Marlin.git",
   "base_commit": "7776c7322837fc6065605413f7932ee9d56458a9",
-  "source_commit": "76dfcbb2a367ecafaf97021bd18ea4c2d6945cd3",
+  "source_commit": "69ecfcf7c652d0422602e4276d994e3088f87779",
   "target": "Opulo_Lumen_REV5",
   "application_address": "0x08000000",
   "firmware_includes_16_byte_dfu_suffix": true,
-  "payload_bytes": 127496,
-  "payload_sha256": "7694cb25a11fc8a98e7f5138ae0d61304f17f480e7f80f7d0b13c984529cfcdb",
-  "firmware_sha256": "9172c660730cef056ed8122f3f86ba8f3886eeffee282697d0df045f5e081114",
-  "source_commit_note": "DFU readback matched. Positive A and B rotation was confirmed from above.",
+  "payload_bytes": 131728,
+  "payload_sha256": "d5e1b3c655e563ca7563c3ecb9bca87e27970d84dab8f50d1fdaf333d33461fd",
+  "firmware_sha256": "2771bf3c3d3aa24f112c302b756bfc163e9d6e03add3a537b1bbca02c3909799",
+  "source_commit_note": "Flash readback matched. All six TMC drivers responded at startup. Operator confirmed 50% fan operation.",
   "x_steps_per_mm": 400,
   "y_steps_per_mm": 320,
-  "z_max_mm": 56,
-  "hardware_verified": "2026-11-18",
-  "z_after_homing_mm": 24.5
+  "z_max_mm": 63,
+  "hardware_verified": "2026-11-19",
+  "z_after_homing_mm": 30,
+  "homing_xyz_mm_per_s": 75,
+  "enclosure_fan": {
+    "startup_full_duty_ms": 3000,
+    "normal_duty_percent": 50,
+    "overtemperature_duty_percent": 100,
+    "pwm_hz": 250,
+    "driver_poll_interval_ms": 500
+  }
 }

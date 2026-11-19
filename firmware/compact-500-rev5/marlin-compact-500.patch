@@ -1,7 +1,7 @@
 From 81450510d5785d86a358e61707185133a746a0ab Mon Sep 17 00:00:00 2001
 From: RealHaltewunsch <julius.merz@web.de>
 Date: Mon, 16 Nov 2026 23:05:46 +0100
-Subject: [PATCH 1/6] Configure Compact-500 vacuum sensors and correct X
+Subject: [PATCH 1/8] Configure Compact-500 vacuum sensors and correct X
  direction
 
 Add PE3-selected HBP1201D support using complete signed 24-bit pressure codes, automatic ambient zero at boot, and OpenPnP-compatible vacuum_level output.
@@ -458,7 +458,7 @@ index 0000000000..9828fba956
 From 24b354c8b43694f7b1d98da96695eff7bd03cbfe Mon Sep 17 00:00:00 2001
 From: RealHaltewunsch <julius.merz@web.de>
 Date: Wed, 18 Nov 2026 16:39:03 +0100
-Subject: [PATCH 2/6] Calibrate Compact-500 X axis to 400 steps/mm
+Subject: [PATCH 2/8] Calibrate Compact-500 X axis to 400 steps/mm
 
 The 100 mm command at 320 steps/mm emitted 32000 steps and moved approximately 80 mm. Use 400 steps/mm for X based on that measurement.
 ---
@@ -485,7 +485,7 @@ index c10338e731..b1dad14210 100644
 From 864135f9e3aa86e0e08610fb9e0c2ffa59e99b62 Mon Sep 17 00:00:00 2001
 From: RealHaltewunsch <julius.merz@web.de>
 Date: Wed, 18 Nov 2026 17:22:32 +0100
-Subject: [PATCH 3/6] Correct Compact-500 dual Y motor direction
+Subject: [PATCH 3/8] Correct Compact-500 dual Y motor direction
 
 Disable relative Y2 direction inversion for this wiring. Both motors now drive the gantry toward Y-MIN on negative moves.
 ---
@@ -512,7 +512,7 @@ index c1f584010f..f5dfabd19b 100644
 From 822071b111ae7636c3aecc76070dc9107df5a3a4 Mon Sep 17 00:00:00 2001
 From: RealHaltewunsch <julius.merz@web.de>
 Date: Wed, 18 Nov 2026 17:30:46 +0100
-Subject: [PATCH 4/6] Limit Compact-500 Z travel to 56 mm
+Subject: [PATCH 4/8] Limit Compact-500 Z travel to 56 mm
 
 The hardware test confirmed 56 mm after homing. Longer moves caused belt skip.
 ---
@@ -539,7 +539,7 @@ index b1dad14210..131ad05ae9 100644
 From 960a2e4f918cb279ff974aed37ad471faa1db002 Mon Sep 17 00:00:00 2001
 From: RealHaltewunsch <julius.merz@web.de>
 Date: Wed, 18 Nov 2026 17:36:48 +0100
-Subject: [PATCH 5/6] Set post-homing Z position to 24.5 mm
+Subject: [PATCH 5/8] Set post-homing Z position to 24.5 mm
 
 ---
  Marlin/Configuration.h | 2 +-
@@ -565,7 +565,7 @@ index 131ad05ae9..31049c9b93 100644
 From 76dfcbb2a367ecafaf97021bd18ea4c2d6945cd3 Mon Sep 17 00:00:00 2001
 From: RealHaltewunsch <julius.merz@web.de>
 Date: Wed, 18 Nov 2026 22:16:42 +0100
-Subject: [PATCH 6/6] Correct Compact-500 nozzle rotation directions
+Subject: [PATCH 6/8] Correct Compact-500 nozzle rotation directions
 
 Invert both nozzle outputs so positive A and B rotate counterclockwise viewed from above, as verified on hardware.
 ---
@@ -587,6 +587,381 @@ index 31049c9b93..9a9d2dc2be 100644
  #define INVERT_K_DIR false
  //#define INVERT_U_DIR false
  //#define INVERT_V_DIR false
+-- 
+2.51.1
+
+
+From fa16fcd96d4ea4c4fb6442d6c7507768b735f3bf Mon Sep 17 00:00:00 2001
+From: RealHaltewunsch <julius.merz@web.de>
+Date: Thu, 19 Nov 2026 12:29:46 +0100
+Subject: [PATCH 7/8] Set Compact-500 Z travel and safe homing height
+
+Limit Z to 63 mm, finish homing at the mechanically confirmed 30 mm safe height, and halve the homing feed rates.
+---
+ Marlin/Configuration.h | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/Marlin/Configuration.h b/Marlin/Configuration.h
+index 9a9d2dc2be..cd1e650a52 100644
+--- a/Marlin/Configuration.h
++++ b/Marlin/Configuration.h
+@@ -1742,7 +1742,7 @@
+ //#define Z_HOMING_HEIGHT  4      // (mm) Minimal Z height before homing (G28) for Z clearance above the bed, clamps, ...
+                                   // Be sure to have this much clearance over your Z_MAX_POS to prevent grinding.
+ 
+-#define Z_AFTER_HOMING  24.5      // (mm) Height to move to after homing Z
++#define Z_AFTER_HOMING  30.0      // (mm) Height to move to after homing Z
+ 
+ // Direction of endstops when homing; 1=MAX, -1=MIN
+ // :[-1,1]
+@@ -1770,7 +1770,7 @@
+ #define Z_MIN_POS 0
+ #define X_MAX_POS X_BED_SIZE
+ #define Y_MAX_POS Y_BED_SIZE
+-#define Z_MAX_POS 56
++#define Z_MAX_POS 63
+ #define I_MIN_POS 0
+ #define I_MAX_POS 720
+ #define J_MIN_POS 0
+@@ -2235,7 +2235,7 @@
+ #endif
+ 
+ // Homing speeds (linear=mm/min, rotational=°/min)
+-#define HOMING_FEEDRATE_MM_M { (150*60), (150*60), (150*60), (50*60), (50*60) }
++#define HOMING_FEEDRATE_MM_M { (75*60), (75*60), (75*60), (25*60), (25*60) }
+ 
+ // Validate that endstops are triggered on homing moves
+ #define VALIDATE_HOMING_ENDSTOPS
+-- 
+2.51.1
+
+
+From 69ecfcf7c652d0422602e4276d994e3088f87779 Mon Sep 17 00:00:00 2001
+From: RealHaltewunsch <julius.merz@web.de>
+Date: Thu, 19 Nov 2026 13:41:45 +0100
+Subject: [PATCH 8/8] Control Compact-500 enclosure fan from TMC thermal
+ warnings
+
+Run J15 at full duty for three seconds at startup, then use 50% PWM. Poll all TMC drivers every 500 ms and switch to full duty until a complete poll reports no active overtemperature warning. Keep configured driver currents.
+---
+ Marlin/Configuration_adv.h                    | 16 ++++--
+ Marlin/src/feature/controllerfan.cpp          | 55 ++++++++++++++++---
+ Marlin/src/feature/tmc_util.cpp               | 28 +++++++++-
+ Marlin/src/feature/tmc_util.h                 |  3 +
+ Marlin/src/module/temperature.cpp             | 22 ++++++--
+ Marlin/src/module/temperature.h               |  4 +-
+ .../src/pins/stm32f4/pins_OPULO_LUMEN_REV5.h  |  4 ++
+ 7 files changed, 108 insertions(+), 24 deletions(-)
+
+diff --git a/Marlin/Configuration_adv.h b/Marlin/Configuration_adv.h
+index f5dfabd19b..0266859007 100644
+--- a/Marlin/Configuration_adv.h
++++ b/Marlin/Configuration_adv.h
+@@ -565,15 +565,19 @@
+  * The fan turns on automatically whenever any driver is enabled and turns
+  * off (or reduces to idle speed) shortly after drivers are turned off.
+  */
+-//#define USE_CONTROLLER_FAN
++#define USE_CONTROLLER_FAN
+ #if ENABLED(USE_CONTROLLER_FAN)
++  #define CONTROLLER_FAN_STARTUP_TEST_MS 3000
++  #define CONTROLLER_FAN_SOFT_PWM          // J15 / PE2 has no hardware PWM.
++  #define CONTROLLER_FAN_TEMPERATURE_ONLY // Skip motor activity as a cooling trigger.
++  #define CONTROLLER_FAN_TMC_OTPW         // Run at full speed while a driver reports overheating.
+   //#define CONTROLLER_FAN_PIN -1           // Set a custom pin for the controller fan
+   //#define CONTROLLER_FAN2_PIN -1          // Set a custom pin for second controller fan
+   //#define CONTROLLER_FAN_USE_Z_ONLY       // With this option only the Z axis is considered
+   //#define CONTROLLER_FAN_IGNORE_Z         // Ignore Z stepper. Useful when stepper timeout is disabled.
+   #define CONTROLLERFAN_SPEED_MIN         0 // (0-255) Minimum speed. (If set below this value the fan is turned off.)
+   #define CONTROLLERFAN_SPEED_ACTIVE    255 // (0-255) Active speed, used when any motor is enabled
+-  #define CONTROLLERFAN_SPEED_IDLE        0 // (0-255) Idle speed, used when motors are disabled
++  #define CONTROLLERFAN_SPEED_IDLE      128 // (0-255) 50% duty without a driver warning
+   #define CONTROLLERFAN_IDLE_TIME        60 // (seconds) Extra time to keep the fan running after disabling motors
+ 
+   // Use TEMP_SENSOR_BOARD as a trigger for enabling the controller fan
+@@ -3215,12 +3219,12 @@
+    * M912 - Clear stepper driver overtemperature pre-warn condition flag.
+    * M122 - Report driver parameters (Requires TMC_DEBUG)
+    */
+-  //#define MONITOR_DRIVER_STATUS
++  #define MONITOR_DRIVER_STATUS
+ 
+   #if ENABLED(MONITOR_DRIVER_STATUS)
+-    #define CURRENT_STEP_DOWN     50  // [mA]
+-    #define REPORT_CURRENT_CHANGE
+-    #define STOP_ON_ERROR
++    #define CURRENT_STEP_DOWN      0  // [mA] Keep configured motor currents.
++    //#define REPORT_CURRENT_CHANGE
++    //#define STOP_ON_ERROR
+   #endif
+ 
+   // @section tmc/hybrid
+diff --git a/Marlin/src/feature/controllerfan.cpp b/Marlin/src/feature/controllerfan.cpp
+index 6e5278ce74..53843216ab 100644
+--- a/Marlin/src/feature/controllerfan.cpp
++++ b/Marlin/src/feature/controllerfan.cpp
+@@ -27,11 +27,19 @@
+ #include "controllerfan.h"
+ #include "../module/stepper.h"
+ #include "../module/temperature.h"
++#if ENABLED(CONTROLLER_FAN_TMC_OTPW)
++  #include "tmc_util.h"
++#endif
+ 
+ ControllerFan controllerFan;
+ 
+ uint8_t ControllerFan::speed;
+ 
++#if CONTROLLER_FAN_STARTUP_TEST_MS > 0
++  static millis_t startup_test_end;
++  static bool startup_test_active;
++#endif
++
+ #if ENABLED(CONTROLLER_FAN_EDITABLE)
+   controllerFan_settings_t ControllerFan::settings; // {0}
+  #else
+@@ -44,6 +52,19 @@ void ControllerFan::setup() {
+     SET_OUTPUT(CONTROLLER_FAN2_PIN);
+   #endif
+   init();
++  #if CONTROLLER_FAN_STARTUP_TEST_MS > 0
++    set_fan_speed(255);
++    #if EITHER(FAN_SOFT_PWM, CONTROLLER_FAN_SOFT_PWM)
++      thermalManager.soft_pwm_controller_speed = 255;
++    #else
++      WRITE(CONTROLLER_FAN_PIN, HIGH);
++      #ifdef CONTROLLER_FAN2_PIN
++        WRITE(CONTROLLER_FAN2_PIN, HIGH);
++      #endif
++    #endif
++    startup_test_end = millis() + CONTROLLER_FAN_STARTUP_TEST_MS;
++    startup_test_active = true;
++  #endif
+ }
+ 
+ void ControllerFan::set_fan_speed(const uint8_t s) {
+@@ -51,9 +72,23 @@ void ControllerFan::set_fan_speed(const uint8_t s) {
+ }
+ 
+ void ControllerFan::update() {
+-  static millis_t lastMotorOn = 0,    // Last time a motor was turned on
++  static millis_t lastCoolingTrigger = 0,    // Last time a cooling trigger was active
+                   nextMotorCheck = 0; // Last time the state was checked
+   const millis_t ms = millis();
++  #if CONTROLLER_FAN_STARTUP_TEST_MS > 0
++    if (startup_test_active) {
++      if (PENDING(ms, startup_test_end)) return;
++      startup_test_active = false;
++    }
++  #endif
++  const bool driver_warning = TERN0(CONTROLLER_FAN_TMC_OTPW, tmc_driver_cooling_needed());
++  #if ENABLED(CONTROLLER_FAN_TMC_OTPW)
++    static bool last_driver_warning;
++    if (driver_warning != last_driver_warning) {
++      last_driver_warning = driver_warning;
++      nextMotorCheck = ms;
++    }
++  #endif
+   if (ELAPSED(ms, nextMotorCheck)) {
+     nextMotorCheck = ms + 2500UL; // Not a time critical function, so only check every 2.5s
+ 
+@@ -61,17 +96,19 @@ void ControllerFan::update() {
+     //   - At least one stepper driver is enabled
+     //   - The heated bed is enabled
+     //   - TEMP_SENSOR_BOARD is reporting >= CONTROLLER_FAN_MIN_BOARD_TEMP
+-    const ena_mask_t axis_mask = TERN(CONTROLLER_FAN_USE_Z_ONLY, _BV(Z_AXIS), (ena_mask_t)~TERN0(CONTROLLER_FAN_IGNORE_Z, _BV(Z_AXIS)));
+-    if ( (stepper.axis_enabled.bits & axis_mask)
+-      || TERN0(HAS_HEATED_BED, thermalManager.temp_bed.soft_pwm_amount > 0)
+-      || TERN0(HAS_CONTROLLER_FAN_MIN_BOARD_TEMP, thermalManager.wholeDegBoard() >= CONTROLLER_FAN_MIN_BOARD_TEMP)
+-    ) lastMotorOn = ms; //... set time to NOW so the fan will turn on
++    bool cooling_needed = TERN0(HAS_CONTROLLER_FAN_MIN_BOARD_TEMP, thermalManager.wholeDegBoard() >= CONTROLLER_FAN_MIN_BOARD_TEMP);
++    #if DISABLED(CONTROLLER_FAN_TEMPERATURE_ONLY)
++      const ena_mask_t axis_mask = TERN(CONTROLLER_FAN_USE_Z_ONLY, _BV(Z_AXIS), (ena_mask_t)~TERN0(CONTROLLER_FAN_IGNORE_Z, _BV(Z_AXIS)));
++      cooling_needed = cooling_needed || (stepper.axis_enabled.bits & axis_mask)
++        || TERN0(HAS_HEATED_BED, thermalManager.temp_bed.soft_pwm_amount > 0);
++    #endif
++    if (cooling_needed) lastCoolingTrigger = ms;
+ 
+     // Fan Settings. Set fan > 0:
+-    //  - If AutoMode is on and steppers have been enabled for CONTROLLERFAN_IDLE_TIME seconds.
++    //  - If AutoMode is on and a cooling trigger was active within CONTROLLERFAN_IDLE_TIME.
+     //  - If System is on idle and idle fan speed settings is activated.
+     set_fan_speed(
+-      settings.auto_mode && lastMotorOn && PENDING(ms, lastMotorOn + SEC_TO_MS(settings.duration))
++      driver_warning || (settings.auto_mode && lastCoolingTrigger && PENDING(ms, lastCoolingTrigger + SEC_TO_MS(settings.duration)))
+       ? settings.active_speed : settings.idle_speed
+     );
+ 
+@@ -91,7 +128,7 @@ void ControllerFan::update() {
+         fan_kick_end = 0;
+     #endif
+ 
+-    #if ENABLED(FAN_SOFT_PWM)
++    #if EITHER(FAN_SOFT_PWM, CONTROLLER_FAN_SOFT_PWM)
+       thermalManager.soft_pwm_controller_speed = speed;
+     #else
+       if (PWM_PIN(CONTROLLER_FAN_PIN))
+diff --git a/Marlin/src/feature/tmc_util.cpp b/Marlin/src/feature/tmc_util.cpp
+index 2e5a5c5585..ba81b3e075 100644
+--- a/Marlin/src/feature/tmc_util.cpp
++++ b/Marlin/src/feature/tmc_util.cpp
+@@ -278,10 +278,22 @@
+ 
+   #endif
+ 
++  #if ENABLED(CONTROLLER_FAN_TMC_OTPW)
++    static bool driver_cooling_needed, polled_overtemp, complete_thermal_poll;
++    bool tmc_driver_cooling_needed() { return driver_cooling_needed; }
++  #endif
++
+   template<typename TMC>
+   bool monitor_tmc_driver(TMC &st, const bool need_update_error_counters, const bool need_debug_reporting) {
+     TMC_driver_data data = get_driver_data(st);
+-    if (data.drv_status == 0xFFFFFFFF || data.drv_status == 0x0) return false;
++    const bool valid = data.drv_status != 0xFFFFFFFF && data.drv_status != 0x0;
++    #if ENABLED(CONTROLLER_FAN_TMC_OTPW)
++      if (need_update_error_counters) {
++        complete_thermal_poll &= valid;
++        if (valid && (data.is_otpw || data.is_ot)) polled_overtemp = true;
++      }
++    #endif
++    if (!valid) return false;
+ 
+     bool should_step_down = false;
+ 
+@@ -327,7 +339,13 @@
+     // Poll TMC drivers at the configured interval
+     static millis_t next_poll = 0;
+     const bool need_update_error_counters = ELAPSED(ms, next_poll);
+-    if (need_update_error_counters) next_poll = ms + MONITOR_DRIVER_STATUS_INTERVAL_MS;
++    if (need_update_error_counters) {
++      next_poll = ms + MONITOR_DRIVER_STATUS_INTERVAL_MS;
++      #if ENABLED(CONTROLLER_FAN_TMC_OTPW)
++        polled_overtemp = false;
++        complete_thermal_poll = true;
++      #endif
++    }
+ 
+     // Also poll at intervals for debugging
+     #if ENABLED(TMC_DEBUG)
+@@ -462,6 +480,12 @@
+         (void)monitor_tmc_driver(stepperE7, need_update_error_counters, need_debug_reporting);
+       #endif
+ 
++      #if ENABLED(CONTROLLER_FAN_TMC_OTPW)
++        // An incomplete poll must not clear a previously observed warning.
++        if (need_update_error_counters && (polled_overtemp || complete_thermal_poll))
++          driver_cooling_needed = polled_overtemp;
++      #endif
++
+       if (TERN0(TMC_DEBUG, need_debug_reporting)) SERIAL_EOL();
+     }
+   }
+diff --git a/Marlin/src/feature/tmc_util.h b/Marlin/src/feature/tmc_util.h
+index c10bab6274..82e83b958e 100644
+--- a/Marlin/src/feature/tmc_util.h
++++ b/Marlin/src/feature/tmc_util.h
+@@ -328,6 +328,9 @@ class TMCMarlin<TMC2660Stepper, AXIS_LETTER, DRIVER_ID, AXIS_ID> : public TMC266
+ };
+ 
+ void monitor_tmc_drivers();
++#if ENABLED(CONTROLLER_FAN_TMC_OTPW)
++  bool tmc_driver_cooling_needed();
++#endif
+ void test_tmc_connection(LOGICAL_AXIS_DECL(const bool, true));
+ 
+ #if ENABLED(TMC_DEBUG)
+diff --git a/Marlin/src/module/temperature.cpp b/Marlin/src/module/temperature.cpp
+index 3274136f41..2cc4250001 100644
+--- a/Marlin/src/module/temperature.cpp
++++ b/Marlin/src/module/temperature.cpp
+@@ -385,8 +385,8 @@ PGMSTR(str_t_heating_failed, STR_T_HEATING_FAILED);
+   uint8_t Temperature::coolerfan_speed = FAN_OFF_PWM;
+ #endif
+ 
+-#if BOTH(FAN_SOFT_PWM, USE_CONTROLLER_FAN)
+-  uint8_t Temperature::soft_pwm_controller_speed = FAN_OFF_PWM;
++#if ENABLED(USE_CONTROLLER_FAN) && EITHER(FAN_SOFT_PWM, CONTROLLER_FAN_SOFT_PWM)
++  volatile uint8_t Temperature::soft_pwm_controller_speed = FAN_OFF_PWM;
+ #endif
+ 
+ // Init fans according to whether they're native PWM or Software PWM
+@@ -3437,6 +3437,18 @@ public:
+  */
+ void Temperature::isr() {
+ 
++  #if BOTH(USE_CONTROLLER_FAN, CONTROLLER_FAN_SOFT_PWM)
++    // Four temperature timer ticks per cycle give 250 Hz on STM32.
++    static uint8_t controller_fan_phase;
++    const uint8_t on_ticks = (uint16_t(soft_pwm_controller_speed) + 32) >> 6;
++    const bool on = controller_fan_phase < on_ticks;
++    WRITE(CONTROLLER_FAN_PIN, on);
++    #ifdef CONTROLLER_FAN2_PIN
++      WRITE(CONTROLLER_FAN2_PIN, on);
++    #endif
++    controller_fan_phase = (controller_fan_phase + 1) & 3;
++  #endif
++
+   // Shut down the laser if steppers are inactive for > LASER_SAFETY_TIMEOUT_MS ms
+   #if LASER_SAFETY_TIMEOUT_MS > 0
+     if (cutter.last_power_applied && ELAPSED(millis(), gcode.previous_move_ms + (LASER_SAFETY_TIMEOUT_MS))) {
+@@ -3473,7 +3485,7 @@ void Temperature::isr() {
+     static SoftPWM soft_pwm_cooler;
+   #endif
+ 
+-  #if BOTH(FAN_SOFT_PWM, USE_CONTROLLER_FAN)
++  #if BOTH(FAN_SOFT_PWM, USE_CONTROLLER_FAN) && DISABLED(CONTROLLER_FAN_SOFT_PWM)
+     static SoftPWM soft_pwm_controller;
+   #endif
+ 
+@@ -3514,7 +3526,7 @@ void Temperature::isr() {
+ 
+       #if ENABLED(FAN_SOFT_PWM)
+ 
+-        #if ENABLED(USE_CONTROLLER_FAN)
++        #if ENABLED(USE_CONTROLLER_FAN) && DISABLED(CONTROLLER_FAN_SOFT_PWM)
+           WRITE(CONTROLLER_FAN_PIN, soft_pwm_controller.add(pwm_mask, soft_pwm_controller_speed));
+         #endif
+ 
+@@ -3594,7 +3606,7 @@ void Temperature::isr() {
+         #if HAS_FAN7
+           if (soft_pwm_count_fan[7] <= pwm_count_tmp) WRITE_FAN(7, LOW);
+         #endif
+-        #if ENABLED(USE_CONTROLLER_FAN)
++        #if ENABLED(USE_CONTROLLER_FAN) && DISABLED(CONTROLLER_FAN_SOFT_PWM)
+           if (soft_pwm_controller.count <= pwm_count_tmp) WRITE(CONTROLLER_FAN_PIN, LOW);
+         #endif
+       #endif
+diff --git a/Marlin/src/module/temperature.h b/Marlin/src/module/temperature.h
+index 4bf76e5d48..aeec2ba652 100644
+--- a/Marlin/src/module/temperature.h
++++ b/Marlin/src/module/temperature.h
+@@ -626,8 +626,8 @@ class Temperature {
+                      soft_pwm_count_fan[FAN_COUNT];
+     #endif
+ 
+-    #if BOTH(FAN_SOFT_PWM, USE_CONTROLLER_FAN)
+-      static uint8_t soft_pwm_controller_speed;
++    #if ENABLED(USE_CONTROLLER_FAN) && EITHER(FAN_SOFT_PWM, CONTROLLER_FAN_SOFT_PWM)
++      static volatile uint8_t soft_pwm_controller_speed;
+     #endif
+ 
+     #if BOTH(HAS_MARLINUI_MENU, PREVENT_COLD_EXTRUSION) && E_MANUAL > 0
+diff --git a/Marlin/src/pins/stm32f4/pins_OPULO_LUMEN_REV5.h b/Marlin/src/pins/stm32f4/pins_OPULO_LUMEN_REV5.h
+index d348c086c8..002371b631 100644
+--- a/Marlin/src/pins/stm32f4/pins_OPULO_LUMEN_REV5.h
++++ b/Marlin/src/pins/stm32f4/pins_OPULO_LUMEN_REV5.h
+@@ -122,6 +122,10 @@
+ #define FAN2_PIN                            PE5
+ #define FAN3_PIN                            PE6
+ 
++#ifndef CONTROLLER_FAN_PIN
++  #define CONTROLLER_FAN_PIN                PE2  // J15 enclosure fan
++#endif
++
+ //#define FAN_SOFT_PWM_REQUIRED
+ 
+ #define BEEPER_PIN                          PB10
 -- 
 2.51.1
 

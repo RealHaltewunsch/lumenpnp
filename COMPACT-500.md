@@ -56,9 +56,12 @@ completed at X=0, Y=0, Z=31.5 mm. At 25 mm/s, the measured 200 mm X move
 and 100 mm Y move confirmed 400 steps/mm for X and 320 steps/mm for Y.
 The operator confirmed Y=387 mm and X=333 mm, with X tested at Y=193.5 mm.
 
-Z travel was confirmed from 0 to 56 mm. Marlin and the OpenPnP controller axis
-now limit the commanded travel to this range. The current firmware moves Z to 24.5 mm after homing. The OpenPnP
-controller home coordinate is set to the same value.
+The original Z travel was confirmed from 0 to 56 mm. After adjusting the
+Z endstop on 2026-11-19, the operator confirmed a revised range of 0–63 mm
+and a shared safe height of 30 mm. Marlin finishes homing at 30 mm and
+OpenPnP uses the same controller home coordinate and Safe Z. N2 maps its
+Z coordinate as 63 mm minus the controller position. X, Y and Z home at
+75 mm/s.
 
 ### Nozzle rotation
 

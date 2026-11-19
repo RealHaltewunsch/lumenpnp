@@ -1,7 +1,7 @@
 # Compact-500 REV5 firmware
 
 This package contains the REV5 firmware built with the Z travel limit confirmed
-during hardware bring-up on 2026-11-18, its source patch series and DFU image.
+during hardware bring-up on 2026-11-19, its source patch series and DFU image.
 
 ## Current behavior
 
@@ -18,9 +18,7 @@ during hardware bring-up on 2026-11-18, its source patch series and DFU image.
   pressure, full raw counts, and `vacuum_level` (255 at ambient).
 - Ring lights use the original repository timing and startup RGB test,
   followed by lights off. No custom timing sender or white boot preset remains.
-- Z travel is limited to 0–56 mm in firmware and on the OpenPnP controller axis.
-  The operator confirmed a 30 mm move and the 56 mm endpoint at 5 mm/s.
-  The configured post-homing position is 24.5 mm. The midpoint of the allowed travel is 28 mm.
+- After adjusting the Z endstop, the operator confirmed a 63 mm travel limit and a shared safe height of 30 mm. Marlin and OpenPnP limit Z to 0–63 mm. The post-homing position and OpenPnP Safe Z are both 30 mm. X, Y and Z homing feed rates are 75 mm/s.
 - Full `G28` succeeded with both Y motors connected. With the previous build, the final position was X=0, Y=0, Z=31.5 mm, with X-MIN and Y-MIN triggered and Z-MIN released after the configured post-homing move.
 
 The X full-turn movement and return passed on hardware, and the direction was
@@ -30,6 +28,18 @@ manufacturer transfer formula; it has not been independently checked with a
 reference manometer. No complete OpenPnP placement cycle was tested.
 
 See the nozzle rotation checks in [COMPACT-500.md](../../COMPACT-500.md).
+
+## Enclosure fan
+
+J15 on REV5 is controlled by PE2. It starts at 100% duty for three seconds,
+then runs at 50% duty with 250 Hz software PWM. Marlin polls X, Y, Y2, Z, A,
+and B every 500 ms. An active TMC2209 overtemperature prewarning or overtemperature
+flag from any driver switches the fan to 100%. The fan returns to 50% after
+a complete poll reports all drivers clear. A missing or invalid response
+cannot clear an existing cooling request. Marlin keeps the configured driver
+currents. All six UART links were verified after flashing and the operator
+confirmed the 50% setting. A real overtemperature transition has yet to be
+verified on the machine.
 
 ## Restore the source
 
@@ -43,14 +53,14 @@ git am /path/to/marlin-compact-500.patch
 pio run -e Opulo_Lumen_REV5
 ```
 
-The final local source commit is `76dfcbb2a367ecafaf97021bd18ea4c2d6945cd3`. The
+The final local source commit is `69ecfcf7c652d0422602e4276d994e3088f87779`. The
 Apple Silicon configuration included in the patch additionally expects the
 local native dfu-util tool described in `COMPACT-500-VACUUM-SENSORS.md`.
 
 ## Binary and verification
 
 `firmware.bin` includes a 16-byte DFU suffix; program its application payload
-at `0x08000000` on the LumenPnP REV5 STM32F407VE. Flash readback matched the build byte for byte. The Z limit is configured at 56 mm. A homing cycle with the new post-homing position has not been run. See `verification.json` and
+at `0x08000000` on the LumenPnP REV5 STM32F407VE. Flash readback matched the build byte for byte. The Z limit is configured at 63 mm. See `verification.json` and
 `source-manifest.json` for hashes and provenance.
 
-Payload SHA-256: `7694cb25a11fc8a98e7f5138ae0d61304f17f480e7f80f7d0b13c984529cfcdb`.
+Payload SHA-256: `d5e1b3c655e563ca7563c3ecb9bca87e27970d84dab8f50d1fdaf333d33461fd`.
